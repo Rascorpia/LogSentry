@@ -1,0 +1,26 @@
+Саня — Collectors (ингест логов)
+ • Реализация сборщиков:
+ • nginx/access.log tail + парсинг
+ • (опц.) auth.log/SSH tail + парсинг
+ • Приведение к “сырому” событию + проброс в нормализацию
+ • Генератор демо-логов (чтобы можно было показать без реальной инфраструктуры)
+
+Никита — Normalization / Schemas / Config
+ • Pydantic модели Event, Alert
+ • Нормализаторы под источники (nginx/auth/app-json)
+ • config.yaml формат (sources + rules + thresholds)
+ • Валидация конфигов + дефолты
+
+Кирилл — Storage / Query API
+ • SQLite схема и миграции/инициализация
+ • DAO-слой: insert_event, search_events, агрегации для графиков
+ • Таблица state (позиции чтения файлов) + восстановление после перезапуска
+ • Индексы и простая оптимизация запросов
+
+Марк — Detections + Dashboard
+ • Правила детектов (brute-force, scanning, spikes 401/403)
+ • Запись алертов в БД
+ • Веб-дашборд (FastAPI + Jinja2 + Chart.js):
+ • Overview (графики, топы)
+ • Alerts (таблица)
+ • Search (фильтры)
